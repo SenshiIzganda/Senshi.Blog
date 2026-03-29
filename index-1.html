@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SENSHI BLOG — স্থপতির কলম</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=JetBrains+Mono:wght@300;400;500&family=Hind+Siliguri:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════
+   VARIABLES & RESET
+══════════════════════════════════ */
+:root {
+  --bg: #0a0a0a;
+  --bg2: #111111;
+  --bg3: #1a1a1a;
+  --border: #222;
+  --text: #e8e8e8;
+  --muted: #666;
+  --accent: #ff3c3c;
+  --accent2: #ffd700;
+  --accent3: #00ff88;
+  --white: #ffffff;
+  --font-display: 'Playfair Display', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-bengali: 'Hind Siliguri', sans-serif;
+}
+[data-theme="light"] {
+  --bg: #f5f5f0;
+  --bg2: #eeede8;
+  --bg3: #e5e4df;
+  --border: #d0cfc8;
+  --text: #111111;
+  --muted: #777;
+  --accent: #cc0000;
+  --accent2: #b8860b;
+  --accent3: #007744;
+  --white: #111111;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; }
+
+/* ══════════════════════════════════
+   TOP STATUS BAR
+══════════════════════════════════ */
+.status-bar {
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  padding: 6px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.5px;
+}
+.status-bar .status-left, .status-bar .status-right {
+  display: flex; gap: 20px; align-items: center; flex-wrap: wrap;
+}
+.status-item { display: flex; align-items: center; gap: 5px; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: #fff; animation: blink 1.5s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ══════════════════════════════════
+   HEADER
+══════════════════════════════════ */
+.header {
+  border-bottom: 3px solid var(--text);
+  padding: 0 24px;
+}
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.header-controls { display: flex; gap: 12px; align-items: center; }
+.btn-icon {
+  width: 36px; height: 36px;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  color: var(--text);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.btn-icon:hover { border-color: var(--accent); color: var(--accent); }
+
+.lang-btn {
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  color: var(--text);
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  transition: all 0.2s;
+  letter-spacing: 1px;
+}
+.lang-btn:hover, .lang-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.header-brand { text-align: center; }
+.brand-name {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 900;
+  letter-spacing: -2px;
+  line-height: 1;
+  color: var(--text);
+}
+.brand-name span { color: var(--accent); }
+.brand-tagline {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* NAV */
+.header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.nav-links { display: flex; gap: 0; }
+.nav-link {
+  padding: 8px 16px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-right: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-link:first-child { border-left: 1px solid var(--border); }
+.nav-link:hover, .nav-link.active { color: var(--accent); background: var(--bg2); }
+
+.search-bar {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  flex: 1;
+  max-width: 320px;
+}
+.search-input {
+  background: var(--bg2);
+  border: none;
+  padding: 8px 14px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  flex: 1;
+  outline: none;
+}
+.search-input::placeholder { color: var(--muted); }
+.search-btn {
+  background: var(--accent);
+  border: none;
+  color: #fff;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: opacity 0.2s;
+}
+.search-btn:hover { opacity: 0.8; }
+
+/* ══════════════════════════════════
+   MAIN LAYOUT
+══════════════════════════════════ */
+.main { max-width: 1400px; margin: 0 auto; padding: 32px 24px; }
+
+/* FEATURED / HERO */
+.featured-section { margin-bottom: 48px; }
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.section-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  border-left: 3px solid var(--accent);
+  padding-left: 10px;
+}
+.section-line { flex: 1; height: 1px; background: var(--border); }
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 2px;
+  background: var(--border);
+}
+.post-card {
+  background: var(--bg);
+  padding: 28px;
+  cursor: pointer;
+  transition: background 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.post-card:hover { background: var(--bg2); }
+.post-card.featured {
+  grid-row: 1 / 3;
+  padding: 40px;
+}
+.post-card.featured .post-title {
+  font-size: clamp(22px, 3vw, 36px);
+  line-height: 1.2;
+}
+.post-category {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: #fff;
+  padding: 3px 8px;
+  margin-bottom: 14px;
+}
+.post-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+.post-title.bengali { font-family: var(--font-bengali); }
+.post-excerpt {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.post-meta {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+.post-author { color: var(--accent2); font-weight: 500; }
+.post-read-time {
+  background: var(--bg3);
+  padding: 2px 8px;
+  border-radius: 2px;
+}
+.post-number {
+  position: absolute;
+  bottom: 20px; right: 24px;
+  font-size: 80px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  color: var(--border);
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* GRID SECTION */
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2px;
+  background: var(--border);
+  margin-bottom: 48px;
+}
+
+/* TAGS */
+.tags-section { margin-bottom: 40px; }
+.tags-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all 0.2s;
+  font-family: var(--font-mono);
+}
+.tag:hover, .tag.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* WRITE POST MODAL */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-top: 3px solid var(--accent);
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+}
+.modal-close {
+  background: none; border: none;
+  color: var(--muted); font-size: 24px;
+  cursor: pointer; line-height: 1;
+}
+.modal-close:hover { color: var(--accent); }
+.modal-body { padding: 24px; }
+.form-group { margin-bottom: 18px; }
+.form-label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.form-input, .form-textarea, .form-select {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 14px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  outline: none;
+  border-radius: 2px;
+  transition: border-color 0.2s;
+}
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+  border-color: var(--accent);
+}
+.form-textarea { min-height: 200px; resize: vertical; line-height: 1.7; }
+.form-select option { background: var(--bg2); }
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  width: 100%;
+  margin-top: 8px;
+}
+.btn-primary:hover { opacity: 0.85; }
+
+/* POST VIEW MODAL */
+.post-modal {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  z-index: 999;
+  display: none;
+  overflow-y: auto;
+}
+.post-modal.open { display: block; }
+.post-modal-inner { max-width: 800px; margin: 0 auto; padding: 40px 24px; }
+.post-modal-back {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; letter-spacing: 1px; color: var(--muted);
+  cursor: pointer; margin-bottom: 32px;
+  border: 1px solid var(--border);
+  padding: 8px 16px;
+  transition: all 0.2s;
+}
+.post-modal-back:hover { color: var(--accent); border-color: var(--accent); }
+.post-modal-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 5vw, 52px);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+.post-modal-content {
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--text);
+}
+.post-modal-content p { margin-bottom: 20px; }
+
+/* FOOTER */
+.footer {
+  border-top: 3px solid var(--text);
+  padding: 32px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+.footer-brand {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--text);
+}
+.footer-brand span { color: var(--accent); }
+
+/* NO RESULTS */
+.no-results {
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--muted);
+  grid-column: 1/-1;
+}
+.no-results-icon { font-size: 48px; margin-bottom: 16px; }
+.no-results-text { font-size: 14px; letter-spacing: 1px; }
+
+/* SHARE TOOLTIP */
+.share-btn {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 4px 10px;
+  font-size: 11px;
+  cursor: pointer;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  transition: all 0.2s;
+}
+.share-btn:hover { background: var(--accent2); color: #000; border-color: var(--accent2); }
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  background: var(--accent3);
+  color: #000;
+  padding: 12px 20px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s;
+  font-family: var(--font-mono);
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .featured-grid { grid-template-columns: 1fr; }
+  .post-card.featured { grid-row: auto; }
+  .header-top { flex-direction: column; text-align: center; }
+  .header-nav { flex-direction: column; }
+  .nav-links { flex-wrap: wrap; justify-content: center; }
+  .search-bar { max-width: 100%; }
+  .status-bar { font-size: 10px; gap: 6px; }
+}
+</style>
+</head>
+<body>
+
+<!-- STATUS BAR -->
+<div class="status-bar">
+  <div class="status-left">
+    <div class="status-item">
+      <div class="status-dot"></div>
+      <span id="statusDate">—</span>
+    </div>
+    <div class="status-item">⏰ <span id="statusTime">—</span></div>
+    <div class="status-item">🌐 <span id="statusIP">Loading...</span></div>
+  </div>
+  <div class="status-right">
+    <div class="status-item">📍 <span id="statusLocation">Detecting...</span></div>
+    <div class="status-item">✍️ <span id="postCount">0</span> POSTS</div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-top">
+    <div class="header-controls">
+      <button class="lang-btn active" id="langEN" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="langBN" onclick="setLang('bn')">বাং</button>
+    </div>
+
+    <div class="header-brand">
+      <div class="brand-name">SENSHI<span>.</span>BLOG</div>
+      <div class="brand-tagline" id="tagline">The Architect's Pen · স্থপতির কলম</div>
+    </div>
+
+    <div class="header-controls">
+      <button class="btn-icon" onclick="toggleTheme()" title="Toggle Theme" id="themeBtn">🌙</button>
+      <button class="btn-icon" onclick="openWriteModal()" title="Write Post">✍️</button>
+    </div>
+  </div>
+
+  <nav class="header-nav">
+    <div class="nav-links">
+      <div class="nav-link active" onclick="filterCategory('all')" data-cat="all" id="navAll">ALL</div>
+      <div class="nav-link" onclick="filterCategory('tech')" data-cat="tech">TECH</div>
+      <div class="nav-link" onclick="filterCategory('finance')" data-cat="finance">FINANCE</div>
+      <div class="nav-link" onclick="filterCategory('life')" data-cat="life">LIFE</div>
+      <div class="nav-link" onclick="filterCategory('geopolitics')" data-cat="geopolitics">GEO</div>
+      <div class="nav-link" onclick="filterCategory('opinion')" data-cat="opinion">OPINION</div>
+    </div>
+    <div class="search-bar">
+      <input class="search-input" id="searchInput" placeholder="Search posts..." oninput="searchPosts()">
+      <button class="search-btn" onclick="searchPosts()">🔍</button>
+    </div>
+  </nav>
+</header>
+
+<!-- MAIN -->
+<main class="main" id="mainContent">
+
+  <!-- FEATURED -->
+  <div class="featured-section" id="featuredSection">
+    <div class="section-header">
+      <div class="section-label" id="labelFeatured">FEATURED</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="featured-grid" id="featuredGrid"></div>
+  </div>
+
+  <!-- TAGS -->
+  <div class="tags-section">
+    <div class="section-header">
+      <div class="section-label">TAGS</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="tags-cloud" id="tagsCloud"></div>
+  </div>
+
+  <!-- ALL POSTS -->
+  <div class="section-header">
+    <div class="section-label" id="labelLatest">LATEST POSTS</div>
+    <div class="section-line"></div>
+  </div>
+  <div class="posts-grid" id="postsGrid"></div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-brand">SENSHI<span>.</span>BLOG</div>
+  <div>© <span id="footerYear"></span> · Built with passion · সাহস দিয়ে তৈরি</div>
+  <div id="footerPostCount">0 Articles Published</div>
+</footer>
+
+<!-- WRITE MODAL -->
+<div class="modal-overlay" id="writeModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="writeModalTitle">✍️ Write New Post</div>
+      <button class="modal-close" onclick="closeWriteModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">POST TITLE</label>
+        <input class="form-input" id="postTitle" placeholder="Enter your title...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">CATEGORY</label>
+        <select class="form-select" id="postCategory">
+          <option value="tech">Tech</option>
+          <option value="finance">Finance</option>
+          <option value="life">Life</option>
+          <option value="geopolitics">Geopolitics</option>
+          <option value="opinion">Opinion</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">TAGS (comma separated)</label>
+        <input class="form-input" id="postTags" placeholder="bitcoin, norway, intj...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">CONTENT</label>
+        <textarea class="form-textarea" id="postContent" placeholder="Write your thoughts here..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">LANGUAGE</label>
+        <select class="form-select" id="postLang">
+          <option value="en">English</option>
+          <option value="bn">বাংলা</option>
+        </select>
+      </div>
+      <button class="btn-primary" onclick="publishPost()" id="publishBtn">PUBLISH POST</button>
+    </div>
+  </div>
+</div>
+
+<!-- POST VIEW -->
+<div class="post-modal" id="postModal">
+  <div class="post-modal-inner">
+    <div class="post-modal-back" onclick="closePostModal()">← Back to Blog</div>
+    <div class="post-category" id="pmCategory"></div>
+    <h1 class="post-modal-title" id="pmTitle"></h1>
+    <div class="post-meta" style="margin-bottom:32px;">
+      <span class="post-author" id="pmAuthor"></span>
+      <span id="pmDate"></span>
+      <span class="post-read-time" id="pmReadTime"></span>
+      <button class="share-btn" onclick="sharePost()">⬆ Share</button>
+    </div>
+    <div class="post-modal-content" id="pmContent"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════
+// DATA
+// ══════════════════════════════════
+let posts = JSON.parse(localStorage.getItem('senshiBlogPosts') || '[]');
+let currentLang = 'en';
+let currentCategory = 'all';
+let currentPostId = null;
+
+// Sample posts if empty
+if (posts.length === 0) {
+  posts = [
+    {
+      id: 1, title: "Why I'm Learning Norwegian: The Big G Blueprint",
+      titleBn: "কেন আমি Norwegian শিখছি: বিগ জি-এর পরিকল্পনা",
+      category: "life", tags: ["norway", "language", "intj", "goals"],
+      content: `The decision to learn Norwegian wasn't random. It was calculated.\n\nAs an INTJ with an EU passport, I've mapped out a specific trajectory: Bangladesh → Norway → Global impact. Every language I learn is a weapon in my arsenal.\n\nNorwegian isn't just a language. It's a key to one of the world's most progressive societies, highest salaries, and strongest social safety nets.\n\nIn 15 days, I achieved 5,491 XP on Duolingo. Not because of streaks. Because of intent.\n\nThe question isn't "why Norwegian?" The question is "why not?"`,
+      date: new Date().toISOString(), author: "Senshi", lang: "en", readTime: "3 min"
+    },
+    {
+      id: 2, title: "The Unbanked Revolution: Crypto Cards in Developing Nations",
+      titleBn: "আনব্যাংকড বিপ্লব: উন্নয়নশীল দেশে ক্রিপ্টো কার্ড",
+      category: "finance", tags: ["crypto", "fintech", "bitget", "wise"],
+      content: `After researching 18+ financial cards — from EBL to Bybit, from Wirex to Dukascopy — one truth emerged:\n\nTraditional banking is designed to exclude.\n\nEvery Bangladesh bank card carries a 3% foreign currency markup. Every international transaction is taxed. The system isn't broken. It's designed this way.\n\nCrypto cards represent a genuine revolution for the unbanked and the underbanked. Bitget Wallet, once expanded to EU residents, offers what traditional banks refuse: financial sovereignty.\n\nThe future isn't fintech. The future is self-custody.`,
+      date: new Date(Date.now()-86400000).toISOString(), author: "Senshi", lang: "en", readTime: "4 min"
+    },
+    {
+      id: 3, title: "এজেন্ডা ২০৩০: প্রশ্ন করার অধিকার",
+      titleBn: "এজেন্ডা ২০৩০: প্রশ্ন করার অধিকার",
+      category: "geopolitics", tags: ["agenda2030", "gates", "rockefeller", "sovereignty"],
+      content: `গেটস ফাউন্ডেশন বাংলাদেশে bKash-এ বিনিয়োগ করেছে। রকফেলার ফাউন্ডেশন ডিজিটাল পাবলিক ইনফ্রাস্ট্রাকচার তৈরিতে অর্থায়ন করছে।\n\nপ্রশ্ন হলো: কেন?\n\nপ্রতিটি "জনহিতকর" বিনিয়োগের পেছনে একটি কাঠামো থাকে। ডেটা সংগ্রহ, ডিজিটাল পরিচয়, কেন্দ্রীভূত নিয়ন্ত্রণ।\n\nএটি ষড়যন্ত্র তত্ত্ব নয়। এটি জবাবদিহিতার দাবি।\n\nযখন কোনো অনির্বাচিত সংস্থা কোটি কোটি মানুষের ভবিষ্যৎ নির্ধারণ করে, প্রশ্ন করাটাই দায়িত্ব।`,
+      date: new Date(Date.now()-172800000).toISOString(), author: "Senshi", lang: "bn", readTime: "5 মিনিট"
+    },
+    {
+      id: 4, title: "APT28 & The New Cyber Cold War",
+      titleBn: "APT28 এবং নতুন সাইবার স্নায়ুযুদ্ধ",
+      category: "tech", tags: ["apt28", "cybersecurity", "russia", "hacking"],
+      content: `Fancy Bear. Unit 26165. APT28.\n\nFor two decades, Russia's most aggressive cyber unit has operated in the shadows of geopolitics — hacking elections, infiltrating parliaments, disrupting anti-doping agencies.\n\nIn 2025, they deployed LAMEHUG: AI-powered malware that generates commands using large language models.\n\nThe arms race has entered a new phase.\n\nWhat fascinates me isn't the malice. It's the sophistication. The nearest-neighbor attack of 2022 — compromising a building's WiFi to reach a target inside — that's not hacking. That's art.\n\nThe lesson: every system has a boundary. The question is where.`,
+      date: new Date(Date.now()-259200000).toISOString(), author: "Senshi", lang: "en", readTime: "4 min"
+    },
+    {
+      id: 5, title: "INTJ in Bangladesh: Wrong Environment",
+      titleBn: "বাংলাদেশে INTJ: ভুল পরিবেশ",
+      category: "opinion", tags: ["intj", "psychology", "bangladesh", "personality"],
+      content: `2% of the world is INTJ. In Bangladesh, those 2% are systematically suppressed.\n\nThe education system rewards memorization, not analysis. Society rewards conformity, not independence. The economy rewards connections, not merit.\n\nFor an INTJ — who lives by evidence, logic, and long-term vision — Bangladesh isn't just limiting. It's suffocating.\n\nThis isn't complaint. It's diagnosis.\n\nThe prescription: leave. Not abandon. Upgrade environment.\n\nTesla left Serbia. Musk left South Africa. The pattern is clear.\n\nNorway isn't escape. It's calibration.`,
+      date: new Date(Date.now()-345600000).toISOString(), author: "Senshi", lang: "en", readTime: "3 min"
+    }
+  ];
+  localStorage.setItem('senshiBlogPosts', JSON.stringify(posts));
+}
+
+// ══════════════════════════════════
+// STATUS BAR
+// ══════════════════════════════════
+function updateStatusBar() {
+  const now = new Date();
+  document.getElementById('statusTime').textContent = now.toLocaleTimeString();
+  document.getElementById('statusDate').textContent = now.toLocaleDateString('en-GB', {weekday:'short', day:'2-digit', month:'short', year:'numeric'});
+  document.getElementById('footerYear').textContent = now.getFullYear();
+}
+setInterval(updateStatusBar, 1000);
+updateStatusBar();
+
+// Get IP
+fetch('https://api.ipify.org?format=json')
+  .then(r => r.json())
+  .then(d => {
+    document.getElementById('statusIP').textContent = d.ip;
+    return fetch(`https://ipapi.co/${d.ip}/json/`);
+  })
+  .then(r => r.json())
+  .then(d => {
+    document.getElementById('statusLocation').textContent = `${d.city || '?'}, ${d.country_name || '?'}`;
+  })
+  .catch(() => {
+    document.getElementById('statusIP').textContent = 'Hidden';
+    document.getElementById('statusLocation').textContent = 'Unknown';
+  });
+
+// ══════════════════════════════════
+// THEME
+// ══════════════════════════════════
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('themeBtn').textContent = isDark ? '🌙' : '☀️';
+  showToast(isDark ? '☀️ Light mode' : '🌙 Dark mode');
+}
+
+// ══════════════════════════════════
+// LANGUAGE
+// ══════════════════════════════════
+const translations = {
+  en: {
+    tagline: "The Architect's Pen · স্থপতির কলম",
+    labelFeatured: "FEATURED",
+    labelLatest: "LATEST POSTS",
+    writeModalTitle: "✍️ Write New Post",
+    publishBtn: "PUBLISH POST",
+    searchPlaceholder: "Search posts...",
+    navAll: "ALL"
+  },
+  bn: {
+    tagline: "স্থপতির কলম · The Architect's Pen",
+    labelFeatured: "বিশেষ নিবন্ধ",
+    labelLatest: "সর্বশেষ পোস্ট",
+    writeModalTitle: "✍️ নতুন পোস্ট লিখুন",
+    publishBtn: "প্রকাশ করুন",
+    searchPlaceholder: "পোস্ট খুঁজুন...",
+    navAll: "সব"
+  }
+};
+
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('langEN').classList.toggle('active', lang === 'en');
+  document.getElementById('langBN').classList.toggle('active', lang === 'bn');
+  const t = translations[lang];
+  document.getElementById('tagline').textContent = t.tagline;
+  document.getElementById('labelFeatured').textContent = t.labelFeatured;
+  document.getElementById('labelLatest').textContent = t.labelLatest;
+  document.getElementById('writeModalTitle').textContent = t.writeModalTitle;
+  document.getElementById('publishBtn').textContent = t.publishBtn;
+  document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+  document.getElementById('navAll').textContent = t.navAll;
+  renderPosts();
+}
+
+// ══════════════════════════════════
+// RENDER
+// ══════════════════════════════════
+const catColors = {
+  tech: '#00ff88', finance: '#ffd700', life: '#ff6b6b',
+  geopolitics: '#8888ff', opinion: '#ff8800'
+};
+
+function getTitle(post) {
+  return (currentLang === 'bn' && post.titleBn) ? post.titleBn : post.title;
+}
+
+function calcReadTime(content) {
+  const words = content.split(' ').length;
+  const mins = Math.max(1, Math.round(words / 200));
+  return currentLang === 'bn' ? `${mins} মিনিট` : `${mins} min read`;
+}
+
+function formatDate(iso) {
+  const d = new Date(iso);
+  if (currentLang === 'bn') {
+    return d.toLocaleDateString('bn-BD', {day:'numeric', month:'long', year:'numeric'});
+  }
+  return d.toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'});
+}
+
+function createPostCard(post, featured = false, index = 0) {
+  const div = document.createElement('div');
+  div.className = `post-card${featured ? ' featured' : ''}`;
+  const color = catColors[post.category] || '#ff3c3c';
+  const title = getTitle(post);
+  div.innerHTML = `
+    <div class="post-category" style="background:${color};color:#000">${post.category.toUpperCase()}</div>
+    <div class="post-title ${post.lang === 'bn' ? 'bengali' : ''}">${title}</div>
+    <div class="post-excerpt">${post.content.substring(0, 160)}...</div>
+    <div class="post-meta">
+      <span class="post-author">${post.author || 'Senshi'}</span>
+      <span>${formatDate(post.date)}</span>
+      <span class="post-read-time">${calcReadTime(post.content)}</span>
+      ${post.tags ? post.tags.slice(0,2).map(t => `<span style="color:var(--muted);font-size:10px">#${t}</span>`).join('') : ''}
+    </div>
+    ${featured ? `<div class="post-number">${String(index+1).padStart(2,'0')}</div>` : ''}
+  `;
+  div.onclick = () => openPost(post.id);
+  return div;
+}
+
+function renderPosts() {
+  let filtered = [...posts];
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  if (currentCategory !== 'all') filtered = filtered.filter(p => p.category === currentCategory);
+  if (search) filtered = filtered.filter(p =>
+    p.title.toLowerCase().includes(search) ||
+    (p.titleBn && p.titleBn.includes(search)) ||
+    p.content.toLowerCase().includes(search) ||
+    (p.tags && p.tags.some(t => t.includes(search)))
+  );
+
+  // Featured grid
+  const fg = document.getElementById('featuredGrid');
+  fg.innerHTML = '';
+  const featuredPosts = filtered.slice(0, 3);
+  if (featuredPosts.length === 0) {
+    fg.innerHTML = `<div class="no-results" style="background:var(--bg)"><div class="no-results-icon">📭</div><div class="no-results-text">No posts found</div></div>`;
+  } else {
+    featuredPosts.forEach((p, i) => fg.appendChild(createPostCard(p, i === 0, i)));
+  }
+
+  // All posts grid
+  const pg = document.getElementById('postsGrid');
+  pg.innerHTML = '';
+  const restPosts = filtered.slice(3);
+  if (restPosts.length === 0 && filtered.length > 0) {
+    pg.innerHTML = '';
+  } else if (restPosts.length === 0) {
+    pg.innerHTML = '';
+  } else {
+    restPosts.forEach(p => pg.appendChild(createPostCard(p, false)));
+  }
+
+  // Tags
+  renderTags();
+
+  // Counts
+  document.getElementById('postCount').textContent = posts.length;
+  document.getElementById('footerPostCount').textContent = `${posts.length} Articles Published`;
+}
+
+function renderTags() {
+  const allTags = [...new Set(posts.flatMap(p => p.tags || []))];
+  const cloud = document.getElementById('tagsCloud');
+  cloud.innerHTML = '';
+  allTags.forEach(tag => {
+    const t = document.createElement('div');
+    t.className = 'tag';
+    t.textContent = `#${tag}`;
+    t.onclick = () => {
+      document.getElementById('searchInput').value = tag;
+      searchPosts();
+    };
+    cloud.appendChild(t);
+  });
+}
+
+// ══════════════════════════════════
+// FILTER & SEARCH
+// ══════════════════════════════════
+function filterCategory(cat) {
+  currentCategory = cat;
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  document.querySelector(`[data-cat="${cat}"]`).classList.add('active');
+  renderPosts();
+}
+
+function searchPosts() { renderPosts(); }
+
+// ══════════════════════════════════
+// POST VIEW
+// ══════════════════════════════════
+function openPost(id) {
+  const post = posts.find(p => p.id === id);
+  if (!post) return;
+  currentPostId = id;
+  document.getElementById('pmCategory').textContent = post.category.toUpperCase();
+  document.getElementById('pmCategory').style.background = catColors[post.category] || '#ff3c3c';
+  document.getElementById('pmCategory').style.color = '#000';
+  document.getElementById('pmTitle').textContent = getTitle(post);
+  document.getElementById('pmTitle').className = `post-modal-title ${post.lang === 'bn' ? 'bengali' : ''}`;
+  document.getElementById('pmAuthor').textContent = post.author || 'Senshi';
+  document.getElementById('pmDate').textContent = formatDate(post.date);
+  document.getElementById('pmReadTime').textContent = calcReadTime(post.content);
+  document.getElementById('pmContent').innerHTML = post.content.split('\n').filter(l=>l).map(l=>`<p>${l}</p>`).join('');
+  document.getElementById('postModal').classList.add('open');
+  window.scrollTo(0,0);
+}
+
+function closePostModal() {
+  document.getElementById('postModal').classList.remove('open');
+}
+
+function sharePost() {
+  const post = posts.find(p => p.id === currentPostId);
+  if (!post) return;
+  const text = `${getTitle(post)} — SENSHI.BLOG\n${window.location.href}`;
+  if (navigator.share) {
+    navigator.share({ title: getTitle(post), url: window.location.href });
+  } else {
+    navigator.clipboard.writeText(text).then(() => showToast('✅ Link copied!'));
+  }
+}
+
+// ══════════════════════════════════
+// WRITE POST
+// ══════════════════════════════════
+function openWriteModal() {
+  document.getElementById('writeModal').classList.add('open');
+}
+function closeWriteModal() {
+  document.getElementById('writeModal').classList.remove('open');
+  document.getElementById('postTitle').value = '';
+  document.getElementById('postContent').value = '';
+  document.getElementById('postTags').value = '';
+}
+
+function publishPost() {
+  const title = document.getElementById('postTitle').value.trim();
+  const content = document.getElementById('postContent').value.trim();
+  const category = document.getElementById('postCategory').value;
+  const tagsRaw = document.getElementById('postTags').value;
+  const lang = document.getElementById('postLang').value;
+
+  if (!title || !content) { showToast('❌ Title and content required!'); return; }
+
+  const tags = tagsRaw.split(',').map(t => t.trim().toLowerCase()).filter(Boolean);
+  const newPost = {
+    id: Date.now(),
+    title: lang === 'en' ? title : '',
+    titleBn: lang === 'bn' ? title : '',
+    category, tags, content, lang,
+    date: new Date().toISOString(),
+    author: 'Senshi',
+    readTime: `${Math.max(1, Math.round(content.split(' ').length / 200))} min`
+  };
+
+  posts.unshift(newPost);
+  localStorage.setItem('senshiBlogPosts', JSON.stringify(posts));
+  closeWriteModal();
+  renderPosts();
+  showToast('✅ Post published successfully!');
+}
+
+// ══════════════════════════════════
+// TOAST
+// ══════════════════════════════════
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ══════════════════════════════════
+// INIT
+// ══════════════════════════════════
+renderPosts();
+</script>
+</body>
+</html>
